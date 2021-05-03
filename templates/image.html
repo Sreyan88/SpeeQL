@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Image to Text</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<style media="screen">
+	body {
+		background-color: #ffffff;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg stroke='%23CCC' stroke-width='0' %3E%3Crect fill='%23F5F5F5' x='-60' y='-60' width='110' height='240'/%3E%3C/g%3E%3C/svg%3E");}
+	</style>
+	<body>
+		<a id='btn' style="background-color: DodgerBlue; border: none; color: white; padding: 12px 16px; font-size: 16px; cursor: pointer; position: absolute; top: 0; left:0;" href="{{url_for('home')}}"><i class="fa fa-home"></i> Home</i></a>
+		<p style="padding-left: 10%;"> Instruction: Please show the list in the camera and click capture when alligned. After capturing save the image and click on upload button to upload the image. Once uploaded click on predict.</p>
+		<br>
+		<h5>Upload the captured file</h5>
+		<form action="{{url_for('upload')}}" method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+		<div>
+		<h2 style="color:black; text-align:center;">Show us what have you got on the buying list today?</h2>
+		<video id="player" controls autoplay style="display: block; width: auto; margin: 0 auto;"></video><br>
+		<button type="submit" id="capture" style="font-family:'Montserrat', sans-serif; color: white; border:none; font-size: 16px; padding: 5px; border-radius: 4px; padding: 9px; position: fixed; right: 15px; top: 100px;">Capture</button>
+		<canvas id="canvas" width=320 height=240></canvas>
+		<script>
+			const player = document.getElementById('player');
+			const canvas = document.getElementById('canvas');
+			const context = canvas.getContext('2d');
+			const captureButton = document.getElementById('capture');
+
+			const constraints = {
+				video: true,
+			};
+
+			captureButton.addEventListener('click', () => {
+				// Draw the video frame to the canvas.
+				context.drawImage(player, 0, 0, canvas.width, canvas.height);
+				var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+				window.location.href = image;
+			});
+
+			// Attach the video stream to the video element and autoplay.
+			navigator.mediaDevices.getUserMedia(constraints)
+				.then((stream) => {
+					player.srcObject = stream;
+				});
+			document.write(geti)
+		</script>
+		<br>
+		<form action="{{ url_for('predict_image')}}" method="post">
+
+			<button type="submit" class="btn btn-primary btn-block btn-large"
+				style="font-family:'Montserrat', sans-serif; color: white; border:none; font-size: 16px; border-radius: 4px;padding: 9px;position: fixed; right: 15px; top: 200px;">Predict</button>
+		</form>
+		</div>
+<!--
+		<textarea rows="5" cols="40" name="description" style="position: fixed; right: 15px; top: 300px;">{{ prediction_text }}
+		</textarea><br> -->
+		<form action="{{ url_for('recomend')}}" method="post">
+			<input type="text" name="Sentence" placeholder="Customer ID" required="required" size="50" style="padding-left: 5px; margin-left:35%;" /><br>
+			<button id='btn' type="submit" class="btn btn-primary btn-block btn-large"
+				style=" margin-left: 36%; color: white; border-radius: 4px; font-size: 12px; padding: 7px; font-family: 'Montserrat', sans-serif; line-height: 2.35;  background-color: rgb(154, 53, 39); border: none;">See Recommendation</button>
+					</div>
+		</form>
+		<div>
+			<center>
+			{% for table in tables %}
+			{{ table|safe }}
+			{% endfor %}
+		</center>
+		</div>
+	</body>
+
+</html>

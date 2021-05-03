@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Text</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/text.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+			<a id='btn' style="background-color: DodgerBlue; border: none; color: white; padding: 12px 16px; font-size: 16px; cursor: pointer; position: absolute; top: 0; left:0;" href="{{url_for('home')}}"><i class="fa fa-home"></i> Home</i></a>
+			<center>
+				<h2 style="font-family: 'Montserrat', sans-serif;"> Tell us what do you want to buy today? <br> <b>Click on the button to Speak</b></h2>
+				Please type. Example: <br>
+				I want to buy a Pantene shampoo. <br> I want to buy shampoo. <br> I want to buy a toothbrush and a bread. <br> I want to buy a Pantene shampoo and an Oral-B toothbrush. <br>
+			</center>
+		<div class="text-input">
+			<section>
+				<center>
+			<form action="{{ url_for('predict_text')}}" method="post">
+				<input type="text" name="Sentence" placeholder="Sentence" required="required" size="100" style="padding-left: 5px;" /><br>
+				<div>
+					<button id='btn' type="submit" class="btn btn-primary btn-block btn-large"
+						style=" color: white; border-radius: 4px; font-size: 12px; padding: 7px; font-family: 'Montserrat', sans-serif; line-height: 2.35;  background-color: rgb(154, 53, 39); border: none;">PREDICT</button>
+				</div>
+			</form>
+			<!-- <textarea rows="5" cols="60" name="description" style="border-radius: 10px;">{{ prediction_text }}</textarea> -->
+			<form action="{{ url_for('recomend')}}" method="post">
+				<input type="text" name="Sentence" placeholder="Customer ID" required="required" size="100" style="padding-left: 5px;" /><br>
+				<button id='btn' type="submit" class="btn btn-primary btn-block btn-large"
+					style="color: white; border-radius: 4px; font-size: 12px; padding: 7px; font-family: 'Montserrat', sans-serif; line-height: 2.35;  background-color: rgb(154, 53, 39); border: none;">See Recommendation</button>
+			</form></center>
+			<div>
+				<center>
+				{% for table in tables %}
+				{{ table|safe }}
+				{% endfor %}
+			</center>
+			</div>
+			</section>
+
+
+	</body>
+
+</html>

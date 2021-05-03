@@ -1,0 +1,21 @@
+# Logs
+*.log
+
+# Draft/Experimental Notebooks
+notebooks_test
+
+# OS Files
+.DS_Store
+
+# Compiled
+build
+*.pyc
+__pycache__
+dist
+*.egg-info
+
+# Dependencies
+**.ipynb_checkpoints
+.cache
+.pytest_cache
+
